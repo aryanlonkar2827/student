@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        🎓 EduManage
+    </div>
+
+    <nav>
+        <button onclick="showSection('dashboard')">
+            Dashboard
+        </button>
+
+        <button onclick="showSection('students')">
+            Students
+        </button>
+
+        <button onclick="showSection('addStudent')">
+            Add Student
+        </button>
+
+        <button onclick="toggleDarkMode()">
+            🌙
+        </button>
+    </nav>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div>
+
+        <h1>
+            Student Management System
+        </h1>
+
+        <p>
+            Manage students, marks, grades and reports easily.
+        </p>
+
+        <button
+            class="primary-btn"
+            onclick="showSection('addStudent')"
+        >
+            + Add New Student
+        </button>
+
+    </div>
+
+</section>
+
+
+<main class="container">
+
+
+<!-- ================= DASHBOARD ================= -->
+
+<section id="dashboard">
+
+    <h2 class="section-title">
+        📊 Dashboard
+    </h2>
+
+    <div class="stats">
+
+        <div class="stat-card">
+            <div class="icon">👨‍🎓</div>
+
+            <h2 id="totalStudents">
+                0
+            </h2>
+
+            <p>Total Students</p>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="icon">👨</div>
+
+            <h2 id="maleStudents">
+                0
+            </h2>
+
+            <p>Male Students</p>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="icon">👩</div>
+
+            <h2 id="femaleStudents">
+                0
+            </h2>
+
+            <p>Female Students</p>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="icon">🏆</div>
+
+            <h2 id="topStudents">
+                0
+            </h2>
+
+            <p>Students Above 75%</p>
+        </div>
+
+    </div>
+
+
+    <div class="dashboard-grid">
+
+        <div class="dashboard-box">
+
+            <h3>
+                📚 Department Summary
+            </h3>
+
+            <div id="departmentSummary"></div>
+
+        </div>
+
+
+        <div class="dashboard-box">
+
+            <h3>
+                🏆 Performance Summary
+            </h3>
+
+            <div id="performanceSummary"></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= STUDENT SECTION ================= -->
+
+<section id="students" class="hidden">
+
+    <h2 class="section-title">
+        👨‍🎓 Student Records
+    </h2>
+
+
+    <div class="search-area">
+
+        <input
+            type="text"
+            id="searchStudent"
+            placeholder="🔍 Search by name, roll no or course..."
+            oninput="displayStudents()"
+        >
+
+
+        <select
+            id="departmentFilter"
+            onchange="displayStudents()"
+        >
+
+            <option value="all">
+                All Departments
+            </option>
+
+            <option value="Computer">
+                Computer
+            </option>
+
+            <option value="IT">
+                Information Technology
+            </option>
+
+            <option value="Mechanical">
+                Mechanical
+            </option>
+
+            <option value="Civil">
+                Civil
+            </option>
+
+            <option value="Electrical">
+                Electrical
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Roll No</th>
+
+                    <th>Student</th>
+
+                    <th>Gender</th>
+
+                    <th>Department</th>
+
+                    <th>Mobile</th>
+
+                    <th>Percentage</th>
+
+                    <th>Grade</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="studentTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ADD STUDENT ================= -->
+
+<section id="addStudent" class="hidden">
+
+    <h2 class="section-title">
+        📝 Add Student
+    </h2>
+
+
+    <div class="form-card">
+
+        <form id="studentForm">
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="studentName"
+                        placeholder="Enter full name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Roll Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="rollNo"
+                        placeholder="Enter roll number"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Gender
+                    </label>
+
+                    <select
+                        id="gender"
+                        required
+                    >
+
+                        <option value="">
+                            Select Gender
+                        </option>
+
+                        <option value="Male">
+                            Male
+                        </option>
+
+                        <option value="Female">
+                            Female
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Department
+                    </label>
+
+                    <select
+                        id="department"
+                        required
+                    >
+
+                        <option value="">
+                            Select Department
+                        </option>
+
+                        <option value="Computer">
+                            Computer
+                        </option>
+
+                        <option value="IT">
+                            Information Technology
+                        </option>
+
+                        <option value="Mechanical">
+                            Mechanical
+                        </option>
+
+                        <option value="Civil">
+                            Civil
+                        </option>
+
+                        <option value="Electrical">
+                            Electrical
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="student@email.com"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Mobile Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="mobile"
+                        pattern="[0-9]{10}"
+                        placeholder="10 digit mobile"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Date of Birth
+                    </label>
+
+                    <input
+                        type="date"
+                        id="dob"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Admission Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="admissionDate"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Address
+                    </label>
+
+                    <textarea
+                        id="address"
+                        placeholder="Enter address"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Mathematics Marks
+                    </label>
+
+                    <input
+                        type="number"
+                        id="math"
+                        min="0"
+                        max="100"
+                        required
+                        oninput="calculateResult()"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Programming Marks
+                    </label>
+
+                    <input
+                        type="number"
+                        id="programming"
+                        min="0"
+                        max="100"
+                        required
+                        oninput="calculateResult()"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Database Marks
+                    </label>
+
+                    <input
+                        type="number"
+                        id="database"
+                        min="0"
+                        max="100"
+                        required
+                        oninput="calculateResult()"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Networking Marks
+                    </label>
+
+                    <input
+                        type="number"
+                        id="networking"
+                        min="0"
+                        max="100"
+                        required
+                        oninput="calculateResult()"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Web Technology Marks
+                    </label>
+
+                    <input
+                        type="number"
+                        id="web"
+                        min="0"
+                        max="100"
+                        required
+                        oninput="calculateResult()"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- RESULT -->
+
+            <div class="result-box">
+
+                <div>
+                    <span>Total Marks</span>
+                    <strong id="totalMarks">0 / 500</strong>
+                </div>
+
+
+                <div>
+                    <span>Percentage</span>
+                    <strong id="percentage">0%</strong>
+                </div>
+
+
+                <div>
+                    <span>Grade</span>
+                    <strong id="grade">-</strong>
+                </div>
+
+            </div>
+
+
+            <div class="form-buttons">
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                    id="submitBtn"
+                >
+                    ➕ Add Student
+                </button>
+
+
+                <button
+                    type="reset"
+                    class="secondary-btn"
+                    onclick="resetForm()"
+                >
+                    Reset
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- ================= STUDENT DETAILS ================= -->
+
+<div
+    class="modal"
+    id="studentModal"
+>
+
+    <div class="modal-content">
+
+        <span
+            class="close"
+            onclick="closeModal()"
+        >
+            ×
+        </span>
+
+        <div id="studentDetails"></div>
+
+    </div>
+
+</div>
+
+
+</main>
+
+
+<footer>
+
+    <h3>
+        🎓 EduManage
+    </h3>
+
+    <p>
+        Student Management System
+    </p>
+
+    <p>
+        © 2026 All Rights Reserved
+    </p>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
